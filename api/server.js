@@ -1,9 +1,7 @@
 const express = require('express');
 const server = express();
 const projectRouter = require('./projects/projects-router.js')
-const projectMiddleware = require('./projects/projects-middleware.js')
 const actionRouter = require('./actions/actions-router.js')
-const actionMiddleware = require('./actions/actions-middlware.js')
 
 // Configure your server here
 // Build your actions router in /api/actions/actions-router.js

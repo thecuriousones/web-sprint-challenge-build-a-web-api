@@ -2,6 +2,7 @@
 const express = require('express');
 const Project = require('./projects-model.js')
 const router = express.Router();
+const { validateProjectId, validateProject } = require('./projects-middleware.js')
 
 
 // Endpoints 
@@ -17,7 +18,7 @@ router.get('/', (req,res)=>{
         })
 })
 
-router.get('/:id', (req,res)=>{
+router.get('/:id', validateProjectId, (req,res)=>{
     Project.get(req.params.id)
         .then(project =>{
             if (project) {
@@ -34,7 +35,7 @@ router.get('/:id', (req,res)=>{
           });
 })
 
-router.post('/', (req,res)=>{
+router.post('/', validateProject, (req,res)=>{
     const newProject = req.body
     if(!newProject.name || !newProject.description ){
         res.status(400).json({message: "Please provide a name and description for new project"})
@@ -53,7 +54,7 @@ router.post('/', (req,res)=>{
     }
 })
 
-router.put('/:id', async (req,res)=>{
+router.put('/:id', validateProjectId, validateProject, async (req,res)=>{
     const changes = req.body
     const {id} = req.params
     try{
@@ -74,7 +75,7 @@ router.put('/:id', async (req,res)=>{
     }
 })
 
-router.delete('/:id', async (req,res)=>{
+router.delete('/:id', validateProjectId, async (req,res)=>{
     try{
         const {id} = req.params
         const deletedProject = await Project.remove(id)
@@ -90,7 +91,7 @@ router.delete('/:id', async (req,res)=>{
     }
 })
 
-router.get('/:id/actions', (req,res)=>{
+router.get('/:id/actions', validateProjectId, (req,res)=>{
     Project.getProjectActions(req.params.id)
         .then(project =>{
             if (project) {
