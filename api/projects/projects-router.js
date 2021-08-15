@@ -29,8 +29,9 @@ router.get('/:id', validateProjectId, (req,res)=>{
             )
         })
         .catch(error => {
+            console.log(error)
             res.status(500).json({
-              message: "The post information could not be retrieved",
+              message: "The project information could not be retrieved",
             });
           });
 })
