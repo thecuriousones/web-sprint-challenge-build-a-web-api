@@ -38,8 +38,8 @@ router.get('/:id', validateProjectId, (req,res)=>{
 
 router.post('/', validateProject, (req,res)=>{
     const newProject = req.body
-    if(!newProject.name || !newProject.description || !newProject.completed ){
-        res.status(400).json({message: "Please provide a name, description, and complete status for new project"})
+    if(!newProject.name || !newProject.description ){
+        res.status(400).json({message: "Please provide a name and description for new project"})
     }else{
         Project.insert(newProject)
             .then(project =>{
